@@ -35,10 +35,10 @@ class GameGrid(Frame):
         while logic.game_state(self.matrix) != 'lose':
         #for x in range(100000):
             mlist = ["w", "s", "a", "d"]
-            dic= {1 : logic.up(self.matrix)[0],
-                  2 : logic.down(self.matrix)[0],
-                  3 : logic.left(self.matrix)[0],
-                  4 : logic.right(self.matrix)[0]}
+            dic= {0 : logic.up(self.matrix)[0],
+                  1 : logic.down(self.matrix)[0],
+                  2 : logic.left(self.matrix)[0],
+                  3 : logic.right(self.matrix)[0]}
             up = logic.up(self.matrix)[0]
             down = logic.down(self.matrix)[0]
             left = logic.left(self.matrix)[0]
@@ -47,19 +47,21 @@ class GameGrid(Frame):
             max_val = max(actt)
             maxact=[i for i, x in enumerate(actt) if x == max_val]
             acttt= []
+            #time.sleep(1)
             for maxx in maxact:
                 if logic.game_state(dic[maxx]) != 'lose':
                     acttt.append(maxact.index(maxx))
+                
             #max_val = max(act)
             #actt = [i for i, x in enumerate(act) if x == max_val]
             
             if len(acttt) > 0:
                 self.key_down(mlist[random.choice(acttt)])
-            else:
+            elif len(actt) == 0:
                 self.key_down(random.choice(mlist))
             #time.sleep(.5)
-        if logic.game_state(self.matrix) == 'lose':
-            logic.new_game(4)
+            if logic.game_state(dic[0]) == 'lose' and logic.game_state(dic[1]) == 'lose' and logic.game_state(dic[2]) == 'lose' and logic.game_state(dic[3]) == 'lose':
+                logic.new_game(4)
     
         
     def init_grid(self):
