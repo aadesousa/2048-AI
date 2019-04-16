@@ -43,7 +43,6 @@ class GameGrid(Frame):
             down = logic.down(self.matrix)[0]
             left = logic.left(self.matrix)[0]
             right = logic.right(self.matrix)[0]
-            act = up, down, left, right
             actt=[self.sx(up), self.sx(down), self.sx(left), self.sx(right)]
             max_val = max(actt)
             maxact=[i for i, x in enumerate(actt) if x == max_val]
