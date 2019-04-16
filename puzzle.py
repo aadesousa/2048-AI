@@ -1,10 +1,8 @@
 import time
 import random
 from tkinter import Frame, Label, CENTER
-import numpy
 import logic
 import constants as c
-import AI
 from threading import Thread
 class GameGrid(Frame):
     def __init__(self):
@@ -60,8 +58,8 @@ class GameGrid(Frame):
             elif len(actt) == 0:
                 self.key_down(random.choice(mlist))
             #time.sleep(.5)
-            if logic.game_state(dic[0]) == 'lose' and logic.game_state(dic[1]) == 'lose' and logic.game_state(dic[2]) == 'lose' and logic.game_state(dic[3]) == 'lose':
-                logic.new_game(4)
+        if logic.game_state(dic[0]) == 'lose' and logic.game_state(dic[1]) == 'lose' and logic.game_state(dic[2]) == 'lose' and logic.game_state(dic[3]) == 'lose':
+            logic.new_game(4)
     
         
     def init_grid(self):
