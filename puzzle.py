@@ -27,17 +27,42 @@ class GameGrid(Frame):
         self.after(0, self.d)
         self.mainloop()
     
+    def sx(self, m):
+        return (sorted([item for sublist in m for item in sublist], reverse = True))[0]
+
+
     def d(self):
         while logic.game_state(self.matrix) != 'lose':
-        #for x in range(1):
+        #for x in range(100000):
             mlist = ["w", "s", "a", "d"]
+            dic= {1 : logic.up(self.matrix)[0],
+                  2 : logic.down(self.matrix)[0],
+                  3 : logic.left(self.matrix)[0],
+                  4 : logic.right(self.matrix)[0]}
+            up = logic.up(self.matrix)[0]
+            down = logic.down(self.matrix)[0]
+            left = logic.left(self.matrix)[0]
+            right = logic.right(self.matrix)[0]
+            act = up, down, left, right
+            actt=[self.sx(up), self.sx(down), self.sx(left), self.sx(right)]
+            max_val = max(actt)
+            maxact=[i for i, x in enumerate(actt) if x == max_val]
+            acttt= []
+            for maxx in maxact:
+                if logic.game_state(dic[maxx]) != 'lose':
+                    acttt.append(maxact.index(maxx))
+            #max_val = max(act)
+            #actt = [i for i, x in enumerate(act) if x == max_val]
             
-            up = sorted([item for sublist in logic.up(self.matrix)[0] for item in sublist], reverse = True)
-            down = sorted([item for sublist in logic.down(self.matrix)[0] for item in sublist], reverse = True)
-            left = sorted([item for sublist in logic.left(self.matrix)[0] for item in sublist], reverse = True)
-            right = sorted([item for sublist in logic.right(self.matrix)[0] for item in sublist], reverse = True)
-            act = [up[0], down[0], left[0], right[0]]
-            self.key_down(mlist[act.index(max(act))])
+            if len(acttt) > 0:
+                self.key_down(mlist[random.choice(acttt)])
+            else:
+                self.key_down(random.choice(mlist))
+            #time.sleep(.5)
+        if logic.game_state(self.matrix) == 'lose':
+            logic.new_game(4)
+    
+        
     def init_grid(self):
         background = Frame(self, bg=c.BACKGROUND_COLOR_GAME,
                            width=c.SIZE, height=c.SIZE)
