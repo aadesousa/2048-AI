@@ -28,12 +28,16 @@ class GameGrid(Frame):
         self.mainloop()
     
     def d(self):
-        #while logic.game_state(self.matrix) != 'lose':
-        for x in range(1):
-            mlist = ["w", "a", "s", "d"]
-            self.key_down(mlist[random.randint(0, 3)])
-            print((logic.up(self.matrix), (logic.down(self.matrix), (logic.left(self.matrix), (logic.right(self.matrix))
-    
+        while logic.game_state(self.matrix) != 'lose':
+        #for x in range(1):
+            mlist = ["w", "s", "a", "d"]
+            
+            up = sorted([item for sublist in logic.up(self.matrix)[0] for item in sublist], reverse = True)
+            down = sorted([item for sublist in logic.down(self.matrix)[0] for item in sublist], reverse = True)
+            left = sorted([item for sublist in logic.left(self.matrix)[0] for item in sublist], reverse = True)
+            right = sorted([item for sublist in logic.right(self.matrix)[0] for item in sublist], reverse = True)
+            act = [up[0], down[0], left[0], right[0]]
+            self.key_down(mlist[act.index(max(act))])
     def init_grid(self):
         background = Frame(self, bg=c.BACKGROUND_COLOR_GAME,
                            width=c.SIZE, height=c.SIZE)
@@ -102,7 +106,6 @@ class GameGrid(Frame):
                         text="You", bg=c.BACKGROUND_COLOR_CELL_EMPTY)
                     self.grid_cells[1][2].configure(
                         text="Lose!", bg=c.BACKGROUND_COLOR_CELL_EMPTY)
-        return self.matrix
     def generate_next(self):
         index = (self.gen(), self.gen())
         while self.matrix[index[0]][index[1]] != 0:
